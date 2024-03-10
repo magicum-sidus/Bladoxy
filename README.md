@@ -1,10 +1,12 @@
-# SSPrivoxy V1.1.0 一键安装使用说明
+# SSPrivoxy V1.2.0 一键安装使用说明
 
 Author *：M.S.*
 
 *Tips：安装脚本文件位于发行版（ Releases ）中。*
 
 ***技术路线：Shadowsocks（作为客户端连接购买 Airport 的 SS 节点）+ privoxy（将 http 和 https 请求转为 socks 请求）+ 设置 proxy 系统环境变量***
+
+> #### v1.2.0 最新支持功能：自动循环检测可用端口（避免多用户进程冲突）
 
 ### 一、准备
 
@@ -48,7 +50,11 @@ chmod +x ./SSPrivoxy-install.sh
 ./SSPrivoxy-install.sh <install|install-local|uninstall|run|modify|stop>
 source ~/.bashrc
 ```
-请在安装、运行、停止、卸载以后确保执行 ```source ~/.bashrc``` 或者使用 ```source``` 执行脚本
+> ## **重要！！！**
+
+请在安装、运行、更换节点、停止、卸载以后确保执行 ```source ~/.bashrc``` 或者使用 ```source``` 执行脚本。
+
+也就是说，每次执行脚本后请确保正确加载 ```~/.bashrc``` 文件。
 
 **一般的操作步骤是：**
 
@@ -92,3 +98,47 @@ wget https://huggingface.co/moka-ai/m3e-base/resolve/main/README.md?download=tru
 ```
 
 第一条命令有返回值且第二条命令成功下载文件，即成功访问到外部网络。
+
+### 六、SSPrivoxy V1 开发路线
+
+- [x] shadowsock补丁
+- [x] 支持安装、运行、更换节点（单节点）、停止、卸载操作
+- [x] 环境检测
+- [x] 支持本地安装（无需联网）
+- [x] 数据持久化（环境变量正确写入和移除）
+- [x] 自动循环检测可用端口（避免多用户进程冲突）
+- [ ] 支持脚本自动更新功能
+- [ ] 支持多节点切换
+- [ ] 读取 yaml 多节点配置文件，托管远程节点配置文件
+- [ ] 自动刷新环境变量
+- [ ] 支持配置多种路由规则，视编程环境自动切换
+- [ ] Coming soon……
+
+### 七、致谢
+
+SSPrivoxy 使用了以下开源项目：
+- shadowsocks 由 [https://shadowsocks.org/](https://shadowsocks.org/)
+
+- privoxy 由 [https://www.privoxy.org/](https://www.privoxy.org/)
+
+  我们对这些项目对开源社区的贡献表示感谢。
+
+> ### FAQ
+>
+> 1. Q：为什么程序没有按照预期行为运行？
+>
+>    A：重要的事情只说一遍：记得运行完成执行 ```source ~/.bashrc``` ！！！
+>
+> 2. Q：为什么报 "jq 命令找不到" 错误？
+>
+>    A：请更新conda到最新版本（最新版conda自带 jq 命令），并在base环境下执行安装脚本。
+>
+> 3. Q：我应该选择哪个安装脚本？
+>
+>    A：SSPrivoxy-install.sh 支持离线安装，也就是说无需下载编译所需文件，建议选择这个同时使用 install-local 参数安装。
+>
+>    SSPrivoxy-nolocal.sh 仅支持下载安装，速度较慢，优点是占用空间小，方便移植。
+>
+> 4. Q：按照要求做了还是出现报错怎么办？
+>
+>    A：我们建议更新到最新版本。我们并没有测试广泛的机器和环境，如果您遇到了安装问题，请提 issue，我们很乐意让我们的作品变得更好。如果您有更好的建议和想法，也请在 issue 中详细说明。
