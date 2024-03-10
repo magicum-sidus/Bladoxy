@@ -1,4 +1,4 @@
-# SSPrivoxy V1.0.0 一键安装使用说明
+# SSPrivoxy V1.1.0 一键安装使用说明
 
 Author *：M.S.*
 
@@ -8,7 +8,7 @@ Author *：M.S.*
 
 ### 一、准备
 
-1. 购买一个机场账号，有可用的SS节点。
+1. 购买一个机场账号，有可用的 SS 节点。
 2. 下载节点配置文件，其中一个节点一般长下面这样（下面不是真实的节点信息，只展示格式），后面要使用这些信息：
 
     ```yaml
@@ -20,7 +20,7 @@ Author *：M.S.*
         password: MG34Sd
         udp: true
     ```
-3. 一个linux普通用户账号，要求安装python环境，gcc以及make工具。
+3. 一个linux普通用户账号，要求安装 Anaconda Python 环境，gcc 以及 make 工具。
 
 ### 二、安装脚本说明
 
@@ -48,16 +48,17 @@ chmod +x ./SSPrivoxy-install.sh
 ./SSPrivoxy-install.sh <install|install-local|uninstall|run|modify|stop>
 source ~/.bashrc
 ```
+请在安装、运行、停止、卸载以后确保执行 ```source ~/.bashrc``` 或者使用 ```source``` 执行脚本
 
 **一般的操作步骤是：**
 
-安装（install or install-local）一次以后无需再次安装。所有进程一直在后台运行，每次登录账号无需额外操作都可直接访问外部网络。可按需关闭（stop）进程，需要时再运行（run）进程，无用时可卸载（uninstall）。支持修改SS节点（modify）。
+安装（install or install-local）一次以后无需再次安装，第一次安装自动运行所有进程。进程一直在后台运行，每次登录账号无需额外操作都可直接访问外部网络。可按需关闭（stop）进程，需要时再运行（run）进程，无用时可卸载（uninstall）。支持修改 SS 节点（modify）。
 
 ### 四、参数选项
 
 ##### A. `install (联网安装)`​
 
-所有需要编译的源代码都通过网络下载，进行编译安装。运行中途需要粘贴 SS 节点信息（如第一节准备中所示）（整个粘贴到命令行即可），然后按 `Ctrl+D`​ 结束输入（观察到程序继续运行即可）。
+所有需要编译的源代码都通过网络下载，进行编译安装。运行中途需要粘贴 SS 节点信息（如第一节准备中所示）（整个粘贴到命令行即可，只粘贴一个节点的信息），然后按 `Ctrl+D`​ 结束输入（按2次，观察到程序继续运行即可）。
 
 ##### B. `install-local (离线本地安装)`​
 
