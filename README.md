@@ -22,7 +22,7 @@ Author *：M.S.*
         password: MG34Sd
         udp: true
     ```
-3. 一个linux普通用户账号，要求安装 Anaconda Python 环境，gcc 以及 make 工具。
+3. 一个linux普通用户账号，要求安装 Anaconda Python 环境，gcc、 g++ 以及 make 工具。
 
 ### 二、安装脚本说明
 
