@@ -6,6 +6,7 @@ Author *：M.S.*
 
 ***技术路线：Shadowsocks（作为客户端连接购买 Airport 的 SS 节点）+ privoxy（将 http 和 https 请求转为 socks 请求）+ 设置 proxy 系统环境变量***
 
+> #### SSPrivoxy 即将更名为：Bladoxy（Blade+Proxy）
 > #### v1.2.0 最新支持功能：自动循环检测可用端口（避免多用户进程冲突）
 
 ### 一、准备
