@@ -1,0 +1,4 @@
+[console_scripts]
+bladoxy = bladoxy.cli.cli_app:main
+sslocal = bladoxy.modules.shadowsocks_module.shadowsocks.local:main
+ssserver = bladoxy.modules.shadowsocks_module.shadowsocks.server:main
