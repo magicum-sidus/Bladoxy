@@ -107,7 +107,7 @@ wget https://huggingface.co/moka-ai/m3e-base/resolve/main/README.md?download=tru
 - [x] 支持本地安装（无需联网）
 - [x] 数据持久化（环境变量正确写入和移除）
 - [x] 自动循环检测可用端口（避免多用户进程冲突）
-- [ ] 支持脚本自动更新功能
+- [ ] 支持脚本自动更新功能 -> 打包为pip包，采用pip系统更新
 - [ ] 支持多种加密算法
 - [ ] 支持多节点切换
 - [ ] 读取 yaml 多节点配置文件，托管远程节点配置文件
