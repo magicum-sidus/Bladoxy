@@ -1,0 +1,19 @@
+proxies:
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+
+proxy-groups:
+  - name: "Auto"
+    type: select
+    proxies:
+      - "US Node 1"
+      - "JP Node 1"
+  - name: "Manual"
+    type: select
+    proxies:
+      - "US Node 1"
+      - "JP Node 1"

@@ -1,5 +1,2 @@
-numpy
-
-# dsfds
-
-pandas
+termcolor
+pyyaml

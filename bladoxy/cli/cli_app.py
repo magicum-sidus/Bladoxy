@@ -5,14 +5,14 @@ from bladoxy.utils.app_actions.cleanup import finalize
 from bladoxy.utils.app_actions.run_app import run
 from bladoxy.utils.app_actions.stop_app import stop
 from bladoxy.utils.nodes import change_node
-from bladoxy.utils.nodes import add_profile
+from bladoxy.utils.nodes import update_profile
 
 
 
 def main():
     parser = argparse.ArgumentParser(description="Bladoxy is a linux network assistant.")
     parser.add_argument("action", help="Select the action you want to perform.",
-                        choices=["init", "cleanup", "run", "stop", "addProf","chgNode"])
+                        choices=["init", "cleanup", "run", "stop", "uptProf","chgNode"])
     
     args = parser.parse_args()
 
@@ -21,7 +21,7 @@ def main():
         "cleanup": finalize,
         "run": run,
         "stop": stop,
-        "addProf": add_profile,
+        "uptProf": update_profile,
         "chgNode": change_node
     }
 

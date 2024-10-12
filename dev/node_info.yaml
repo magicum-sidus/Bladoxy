@@ -1,0 +1,289 @@
+proxies:
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
+  - name: "US Node 1"
+    type: vmess
+    server: us.example.com
+    port: 443
+  - name: "JP Node 1"
+    type: vmess
+    server: jp.example.com
+    port: 443
+  - name: "UK Node 1"
+    type: vmess
+    server: uk.example.com
+    port: 443
