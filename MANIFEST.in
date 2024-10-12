@@ -1,2 +1,5 @@
 include bladoxy/README.md
 include bladoxy/LICENSE
+include bladoxy/requirements.txt
+recursive-include bladoxy/modules/dependencies/pcre *
+recursive-include bladoxy/modules/privoxy *

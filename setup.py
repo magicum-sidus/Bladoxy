@@ -21,12 +21,12 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        'bladoxy': ['README.md', 'LICENSE'],  
+        'bladoxy': ['README.md', 'LICENSE', 'modules/dependeencies/pcre/**/*', 'modules/privoxy/**/*'],  
     },
     # install_requires=[
     #     # Add any other dependencies your package requires
     # ],
-    install_requires=parse_requirements('requirements.txt'),
+    install_requires=parse_requirements('bladoxy/requirements.txt'),
     entry_points="""
     [console_scripts]
     bladoxy = bladoxy.cli.cli_app:main
