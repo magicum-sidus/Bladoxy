@@ -13,6 +13,7 @@ from termcolor import colored
 
 import os
 import bladoxy
+import re
 
 
 
@@ -40,7 +41,7 @@ def initialize():
     START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"
     if check_marker_in_bashrc(bashrc_path, START_MARKER_BLADOXY):
         # 获取用户确认
-        reply = input("检测到您已安装 Bladoxy ，要卸载重装吗? (y/n) ").strip().lower()
+        reply = input("检测到您已安装 Bladoxy ，要清理重装吗? (y/n) ").strip().lower()
         if reply == 'y':
             finalizeToinit()
         else:

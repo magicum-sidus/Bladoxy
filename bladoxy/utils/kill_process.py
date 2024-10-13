@@ -1,3 +1,7 @@
+import subprocess
+import os
+
+
 def get_pids_by_name(process_name):
     """通过进程名获取进程 ID 列表"""
     try:

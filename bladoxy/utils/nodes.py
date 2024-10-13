@@ -91,21 +91,21 @@ def ssconfig_handler():
     # 2. Check if the configuration file exists
     if not os.path.isfile(config_path):
         print("Configuration file does not exist.")
-        return
+        exit(1)
 
     # 3. Check if the configuration file is valid (Clash YAML configuration file)
     try:
         with open(config_path, 'r', encoding='utf-8') as file:
             config_data = yaml.safe_load(file)
-    except yaml.YAMLError:
+            proxies = config_data.get('proxies', [])
+    except:
         print("Configuration file is not a valid YAML file.")
-        return
+        exit(1)
 
     # Check if 'proxies' field has nodes and is valid
-    proxies = config_data.get('proxies', [])
     if not proxies:
         print("The configuration file does not contain any proxy nodes.")
-        return
+        exit(1)
 
     valid = True
     for proxy in proxies:
@@ -115,7 +115,7 @@ def ssconfig_handler():
 
     if not valid:
         print("The configuration file contains invalid SS nodes.")
-        return
+        exit(1)
 
     # 4. Copy the configuration file to the profiles directory
     WORKING_DIRECTORY = os.path.dirname(bladoxy.__file__)
@@ -440,6 +440,7 @@ def node_selector(stdscr, filepath):
         # 显示选中的节点信息
         stdscr.addstr(0, 0, f"You selected: {selected_node_info['name']}")
         stdscr.addstr(1, 0, f"Details: {selected_node_info}")
+        stdscr.addstr(6, 0, "请按回车继续……")
         stdscr.refresh()
         stdscr.getch()
 

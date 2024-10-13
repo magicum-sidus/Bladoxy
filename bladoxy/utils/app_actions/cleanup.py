@@ -69,41 +69,58 @@ def stop_processes_by_name(process_name):
         print(f"停止进程 {process_name} 时出现错误: {e}")
 
 
-    
+
+
+
+def check_marker_in_bashrc(bashrc_path, start_marker):
+    """检查 .bashrc 中是否包含指定的标记"""
+    try:
+        with open(bashrc_path, 'r') as file:
+            content = file.read()
+        return re.search(re.escape(start_marker), content) is not None
+    except FileNotFoundError:
+        print(f"未找到文件: {bashrc_path}")
+        return False
+
 
 
 def finalize():
-    # 获取用户确认
-    if user_confirmation("您想要卸载 Bladoxy 吗"):
-        print("正在卸载...")
-        # 删除文件
-        remove_files()
+    bashrc_path = os.path.expanduser("~/.bashrc")
+    START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"
+    if check_marker_in_bashrc(bashrc_path, START_MARKER_BLADOXY):
+        # 获取用户确认
+        if user_confirmation("您想要运行 Bladoxy清理程序 吗"):
+            print("正在清理...")
+            # 删除文件
+            remove_files()
 
-        # 删除 proxy 和 Bladoxy 环境变量
-        START_MARKER_PROXY = "######## START MY_PROXY ########"
-        END_MARKER_PROXY = "######## END MY_PROXY ########"
-        START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"
-        END_MARKER_BLADOXY = "######## END MY_BLADOXY ########"
+            # 删除 proxy 和 Bladoxy 环境变量
+            START_MARKER_PROXY = "######## START MY_PROXY ########"
+            END_MARKER_PROXY = "######## END MY_PROXY ########"
+            START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"
+            END_MARKER_BLADOXY = "######## END MY_BLADOXY ########"
 
-        remove_bashrc_section(START_MARKER_PROXY, END_MARKER_PROXY)
-        remove_bashrc_section(START_MARKER_BLADOXY, END_MARKER_BLADOXY)
+            remove_bashrc_section(START_MARKER_PROXY, END_MARKER_PROXY)
+            remove_bashrc_section(START_MARKER_BLADOXY, END_MARKER_BLADOXY)
 
-        # 停止 'privoxy' 和 'sslocal' 进程
-        stop_processes_by_name('privoxy')
-        stop_processes_by_name('sslocal')
+            # 停止 'privoxy' 和 'sslocal' 进程
+            stop_processes_by_name('privoxy')
+            stop_processes_by_name('sslocal')
 
-        print("成功停止进程")
+            print("成功停止进程")
 
-        print("Bladoxy 卸载成功！")
-        print("请执行 source ~/.bashrc 刷新环境变量.")
+            print("Bladoxy 清理成功！")
+            print("请执行 source ~/.bashrc 刷新环境变量.")
+        else:
+            print("清理已取消")
     else:
-        print("卸载已取消")
+        print("请先执行 bladoxy init 进行初始化！")
 
 
 
 
 def finalizeToinit():
-    print("正在卸载Bladoxy...")
+    print("正在清理Bladoxy...")
     # 删除文件
     remove_files()
 
@@ -122,7 +139,7 @@ def finalizeToinit():
 
     print("成功停止进程")
 
-    print("Bladoxy 卸载成功！")
+    print("Bladoxy 清理成功！")
     print("请执行 source ~/.bashrc 刷新环境变量.")
 
 

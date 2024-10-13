@@ -1,6 +1,37 @@
 import bladoxy
 
 import os
+import re
+
+
+
+def remove_proxy_from_bashrc(bashrc_path, start_marker, end_marker):
+    """从 .bashrc 中删除指定标记之间的环境变量"""
+    
+    try:
+        # 读取 .bashrc 文件内容
+        with open(bashrc_path, 'r') as file:
+            content = file.read()
+
+        # 查找 START_MARKER 和 END_MARKER 之间的内容
+        pattern = re.escape(start_marker) + r'.*?' + re.escape(end_marker)
+        if re.search(pattern, content, re.DOTALL):
+            print("从 .bashrc 中删除环境变量")
+            # 删除标记之间的内容
+            updated_content = re.sub(pattern, '', content, flags=re.DOTALL)
+
+            # 将修改后的内容写回 .bashrc 文件
+            with open(bashrc_path, 'w') as file:
+                file.write(updated_content)
+        else:
+            print("未找到 proxy 环境变量")
+    
+    except FileNotFoundError:
+        print(f"未找到文件: {bashrc_path}")
+    except Exception as e:
+        print(f"修改 .bashrc 时出错: {e}")
+
+
 
 
 def add_proxy_to_bashrc(bashrc_path, start_marker, end_marker, privoxy_port):

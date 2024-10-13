@@ -5,7 +5,8 @@ from bladoxy.utils.start_process import start_sslocal,start_privoxy
 from bladoxy.utils.check_availability import check_availability
 from bladoxy.utils.kill_process import kill_possible_processes
 import os
-import subprocess
+import re
+
 
 
 # def get_pids_by_name(process_name):
@@ -44,16 +45,36 @@ import subprocess
 #         print("未找到 'sslocal' 进程。")
 
 
+
+
+def check_marker_in_bashrc(bashrc_path, start_marker):
+    """检查 .bashrc 中是否包含指定的标记"""
+    try:
+        with open(bashrc_path, 'r') as file:
+            content = file.read()
+        return re.search(re.escape(start_marker), content) is not None
+    except FileNotFoundError:
+        print(f"未找到文件: {bashrc_path}")
+        return False
+
+
 def run():
     # 这里需要检测是否已初始化
     echo_version_info()
     print("(重新)运行SSPrivoxy...")
-    kill_possible_processes()
-    privoxy_port,ss_port = configure_port(init_first = False,is_init = False,onlyss=False)
-    set_environment_variables(ss_port=ss_port, privoxy_port=privoxy_port, is_init = False)
-    start_sslocal()
-    start_privoxy()
-    check_availability()
+
+
+    bashrc_path = os.path.expanduser("~/.bashrc")
+    START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"
+    if check_marker_in_bashrc(bashrc_path, START_MARKER_BLADOXY):
+        kill_possible_processes()
+        privoxy_port,ss_port = configure_port(is_init = False,onlyss=False)
+        set_environment_variables(ss_port=ss_port, privoxy_port=privoxy_port, is_init = False)
+        start_sslocal()
+        start_privoxy()
+        check_availability()
+    else:
+        print("请先执行 bladoxy init 进行初始化！")
 
 
 
