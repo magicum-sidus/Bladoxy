@@ -101,5 +101,30 @@ def finalize():
 
 
 
+
+def finalizeToinit():
+    print("正在卸载Bladoxy...")
+    # 删除文件
+    remove_files()
+
+    # 删除 proxy 和 Bladoxy 环境变量
+    START_MARKER_PROXY = "######## START MY_PROXY ########"
+    END_MARKER_PROXY = "######## END MY_PROXY ########"
+    START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"
+    END_MARKER_BLADOXY = "######## END MY_BLADOXY ########"
+
+    remove_bashrc_section(START_MARKER_PROXY, END_MARKER_PROXY)
+    remove_bashrc_section(START_MARKER_BLADOXY, END_MARKER_BLADOXY)
+
+    # 停止 'privoxy' 和 'sslocal' 进程
+    stop_processes_by_name('privoxy')
+    stop_processes_by_name('sslocal')
+
+    print("成功停止进程")
+
+    print("Bladoxy 卸载成功！")
+    print("请执行 source ~/.bashrc 刷新环境变量.")
+
+
 if __name__ == "__main__":
     finalize()

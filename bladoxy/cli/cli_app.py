@@ -5,7 +5,7 @@ from bladoxy.utils.app_actions.cleanup import finalize
 from bladoxy.utils.app_actions.run_app import run
 from bladoxy.utils.app_actions.stop_app import stop
 from bladoxy.utils.app_actions.update_node import update_node
-from bladoxy.utils.nodes import update_profile
+from bladoxy.utils.app_actions.update_profile import update_profile
 
 
 

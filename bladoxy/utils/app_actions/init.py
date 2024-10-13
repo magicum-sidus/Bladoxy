@@ -7,6 +7,8 @@ from bladoxy.utils.set_env import set_environment_variables
 from bladoxy.utils.check_availability import check_availability
 from bladoxy.utils.start_process import start_sslocal,start_privoxy
 
+from bladoxy.utils.app_actions.cleanup import finalizeToinit
+
 from termcolor import colored
 
 import os
@@ -14,7 +16,15 @@ import bladoxy
 
 
 
-
+def check_marker_in_bashrc(bashrc_path, start_marker):
+    """检查 .bashrc 中是否包含指定的标记"""
+    try:
+        with open(bashrc_path, 'r') as file:
+            content = file.read()
+        return re.search(re.escape(start_marker), content) is not None
+    except FileNotFoundError:
+        print(f"未找到文件: {bashrc_path}")
+        return False
 
 
 
@@ -23,6 +33,27 @@ def initialize():
     
     logger.info("Version Info")
     echo_version_info()
+
+
+
+    bashrc_path = os.path.expanduser("~/.bashrc")
+    START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"
+    if check_marker_in_bashrc(bashrc_path, START_MARKER_BLADOXY):
+        # 获取用户确认
+        reply = input("检测到您已安装 Bladoxy ，要卸载重装吗? (y/n) ").strip().lower()
+        if reply == 'y':
+            finalizeToinit()
+        else:
+            print("重装已取消")
+            print("正在退出安装程序……")
+            exit(1)
+    else:
+        print("未检测到已安装的 SSPrivoxy")
+
+
+
+
+
     logger.info("Initializing the environment...")
     # 嵌入的许可证文本
     LICENSE = colored("""
@@ -145,13 +176,6 @@ Bladoxy项目使用了以下开源项目：
 
 
 
-
-    
-
-
-
-    
-    
 
 if __name__ == "__main__":
     initialize()

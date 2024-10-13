@@ -51,10 +51,10 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
                 lines = file.readlines()
 
 
-            
-            backup_file = privoxy_configure_file_install + '.bak'
-            with open(backup_file, 'w') as backup:
-                backup.writelines(lines)        # TODO:可以去掉
+            # # TODO:可以去掉，备份的逻辑再思考一下。如果处理正确，理论上无需备份
+            # backup_file = privoxy_configure_file_install + '.bak'
+            # with open(backup_file, 'w') as backup:
+            #     backup.writelines(lines)        
 
             current_privoxy_port_line = lines[793].strip()  # 获取第794行 (索引为793)
             current_privoxy_port = int(current_privoxy_port_line.split(':')[-1])  # 提取端口号

@@ -448,8 +448,7 @@ def node_selector(stdscr, filepath):
 
 
 
-def update_profile():
-    print("更新配置...")
+
 
 
 
