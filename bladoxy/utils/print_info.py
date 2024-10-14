@@ -1,6 +1,6 @@
 # Copyright 2024 Magicum Sidus
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
+# Licensed under the Apache License, Version 2.0 (the "License"))
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -28,12 +28,12 @@ def echo_version_info():
 
 
 
-  print(" __     __ _     _____    ___    ____         _         ")
-  print(" \ \   / // |   |___ /   / _ \  | __ )   ___ | |_  __ _ ")
-  print("  \ \ / / | |     |_ \  | | | | |  _ \  / _ \| __|/ _` |")
-  print("   \ V /  | | _  ___) |_| |_| | | |_) ||  __/| |_| (_| |")
-  print("    \_/   |_|(_)|____/(_)\___/  |____/  \___| \__|\__,_|")
-  print("                                                        ")
+  print(" __     __ _     _____    ___           _         _            ")
+  print(" \ \   / // |   |___ /   / _ \    __ _ | | _ __  | |__    __ _ ")
+  print("  \ \ / / | |     |_ \  | | | |  / _` || || '_ \ | '_ \  / _` |")
+  print("   \ V /  | | _  ___) |_| |_| | | (_| || || |_) || | | || (_| |")
+  print("    \_/   |_|(_)|____/(_)\___/   \__,_||_|| .__/ |_| |_| \__,_|")
+  print("                                          |_|                  ")
 
 
   print("     _         _   _                  __  __   ____   ")
