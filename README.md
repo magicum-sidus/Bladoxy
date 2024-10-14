@@ -42,7 +42,7 @@ Author *：M.S.*
 ```bash
 # 请选择 3.5-3.9 的 python 版本
 conda create -n bladoxy python=3.9
-conda activate bldaoxy
+conda activate bladoxy
 pip install bladoxy
 # 安装后一定要初始化 Bladoxy，必须在同一个 conda 环境
 # 安装时需要输入节点文件路径，请提前准备好！
