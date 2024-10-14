@@ -13,6 +13,9 @@
 # limitations under the License.
 
 
+import os
+import re
+
 from bladoxy.utils.print_info import echo_version_info
 from bladoxy.utils.configure_port import configure_port
 from bladoxy.utils.set_env import set_environment_variables
@@ -20,8 +23,7 @@ from bladoxy.utils.start_process import start_sslocal,start_privoxy
 from bladoxy.utils.check_availability import check_availability
 from bladoxy.utils.kill_process import kill_possible_processes
 from bladoxy.utils.logger import logger
-import os
-import re
+
 
 
 

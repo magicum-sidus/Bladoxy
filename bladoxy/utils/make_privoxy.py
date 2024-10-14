@@ -12,17 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-import bladoxy
-from bladoxy.utils.logger import logger
-
 import os
 import subprocess
 import tarfile
 import shutil
 from termcolor import colored
 
-import tempfile
+
+
+import bladoxy
+from bladoxy.utils.logger import logger
+
+
 
 
 def run_command(command):

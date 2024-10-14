@@ -14,9 +14,10 @@
 
 
 import os
+import shutil
 import tempfile
 import urllib.request
-import shutil
+
 from bladoxy.utils.logger import logger
 
 # 检查能否访问 www.google.com

@@ -13,6 +13,11 @@
 # limitations under the License.
 
 
+import os
+import re
+from termcolor import colored
+
+import bladoxy
 from bladoxy.utils.print_info import echo_version_info
 from bladoxy.utils.logger import logger
 from bladoxy.utils.nodes import ssconfig_handler
@@ -21,17 +26,13 @@ from bladoxy.utils.nodes import change_node
 from bladoxy.utils.set_env import set_environment_variables
 from bladoxy.utils.check_availability import check_availability
 from bladoxy.utils.start_process import start_sslocal,start_privoxy
-
 from bladoxy.utils.app_actions.cleanup import finalizeToinit
-
 from bladoxy.utils.make_privoxy import make_privoxy
 from bladoxy.utils.print_license import print_license
 
-from termcolor import colored
 
-import os
-import bladoxy
-import re
+
+
 
 
 
