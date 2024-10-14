@@ -12,7 +12,7 @@ def parse_requirements(filename):
 
 setup(
     name="bladoxy",
-    version="1.4.0-a0",
+    version="1.4.1",
     license='http://www.apache.org/licenses/LICENSE-2.0',
     description="Bladoxy is a linux network assistant.",
     author='Magicum Sidus',
@@ -42,5 +42,6 @@ setup(
     ],
     python_requires='>=3.5, <3.10',
     long_description=long_description,
+    long_description_content_type='text/markdown'
 )
 
