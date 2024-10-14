@@ -19,6 +19,7 @@ from bladoxy.utils.set_env import set_environment_variables
 from bladoxy.utils.start_process import start_sslocal,start_privoxy
 from bladoxy.utils.check_availability import check_availability
 from bladoxy.utils.kill_process import kill_possible_processes
+from bladoxy.utils.logger import logger
 import os
 import re
 
@@ -36,14 +37,14 @@ def check_marker_in_bashrc(bashrc_path, start_marker):
             content = file.read()
         return re.search(re.escape(start_marker), content) is not None
     except FileNotFoundError:
-        print(f"未找到文件: {bashrc_path}")
+        logger.warning(f"未找到文件: {bashrc_path}")
         return False
 
 
 def run():
     # 这里需要检测是否已初始化
     echo_version_info()
-    print("(重新)运行 Bladoxy...")
+    logger.info("(重新)运行 Bladoxy...")
 
 
     bashrc_path = os.path.expanduser("~/.bashrc")
@@ -56,7 +57,7 @@ def run():
         start_privoxy()
         check_availability()
     else:
-        print("请先执行 bladoxy init 进行初始化！")
+        logger.error("请先执行 bladoxy init 进行初始化！")
 
 
 

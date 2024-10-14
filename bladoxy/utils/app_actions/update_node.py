@@ -18,6 +18,7 @@ from bladoxy.utils.nodes import change_node
 from bladoxy.utils.configure_port import configure_port
 from bladoxy.utils.start_process import start_sslocal
 from bladoxy.utils.check_availability import check_availability
+from bladoxy.utils.logger import logger
 import re
 import os
 
@@ -30,7 +31,7 @@ def check_marker_in_bashrc(bashrc_path, start_marker):
             content = file.read()
         return re.search(re.escape(start_marker), content) is not None
     except FileNotFoundError:
-        print(f"未找到文件: {bashrc_path}")
+        logger.warning(f"未找到文件: {bashrc_path}")
         return False
 
 
@@ -48,7 +49,7 @@ def update_node():
         check_availability()
 
     else:
-        print("请先执行 bladoxy init 进行初始化！")
+        logger.error("请先执行 bladoxy init 进行初始化！")
 
 
 

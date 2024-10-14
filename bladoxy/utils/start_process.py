@@ -16,6 +16,7 @@
 
 import subprocess
 import bladoxy
+from bladoxy.utils.logger import logger
 import os
 
 
@@ -38,15 +39,15 @@ def start_sslocal():
     try:
         # 调用命令行工具
         subprocess.run(command, check=True)
-        print("sslocal started successfully")
+        logger.info("sslocal 启动成功")
     except subprocess.CalledProcessError as e:
-        print(f"Failed to start sslocal: {e}")
+        logger.error(f"sslocal 启动失败: {e}")
 
 
 
 def start_privoxy():
     # 打印启动消息
-    print("正在启动privoxy……")
+    logger.info("正在启动privoxy……")
 
     WORKING_DIRECTORY = os.path.dirname(bladoxy.__file__)
 
@@ -64,6 +65,6 @@ def start_privoxy():
     # 启动 privoxy
     try:
         subprocess.run([privoxy_executable_path, privoxy_config_path], check=True)
-        print("privoxy已经启动")
+        logger.info("privoxy已经启动")
     except subprocess.CalledProcessError as e:
-        print(f"启动 privoxy 时出错: {e}")
+        logger.error(f"启动 privoxy 时出错: {e}")

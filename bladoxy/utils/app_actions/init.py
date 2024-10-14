@@ -42,7 +42,7 @@ def check_marker_in_bashrc(bashrc_path, start_marker):
             content = file.read()
         return re.search(re.escape(start_marker), content) is not None
     except FileNotFoundError:
-        print(f"未找到文件: {bashrc_path}")
+        logger.warning(f"未找到文件: {bashrc_path}")
         return False
 
 
@@ -63,11 +63,11 @@ def initialize():
         if reply == 'y':
             finalizeToinit()
         else:
-            print("重装已取消")
-            print("正在退出初始化安装程序……")
+            logger.warning("重装已取消")
+            logger.info("正在退出初始化安装程序……")
             exit(1)
     else:
-        print("未检测到已安装的 Bladoxy")
+        logger.info("未检测到已安装的 Bladoxy")
 
 
 

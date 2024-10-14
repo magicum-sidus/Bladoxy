@@ -15,6 +15,7 @@
 
 import bladoxy
 from bladoxy.utils.get_available_port import get_available_port
+from bladoxy.utils.logger import logger
 
 import os
 import re
@@ -39,12 +40,12 @@ def modify_bashrc_variable(bashrc_path, variable_name, new_value):
         with open(bashrc_path, 'w') as file:
             file.write(updated_content)
 
-        print(f"{variable_name} 已修改为 {new_value}")
+        logger.info(f"{variable_name} 已修改为 {new_value}")
 
     except FileNotFoundError:
-        print(f"未找到文件: {bashrc_path}")
+        logger.warning(f"未找到文件: {bashrc_path}")
     except Exception as e:
-        print(f"修改 {variable_name} 时出错: {e}")
+        logger.error(f"修改 {variable_name} 时出错: {e}")
 
 
 
@@ -55,11 +56,11 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
         if is_init:
             privoxy_configure_file_install = os.path.join(WORKING_DIRECTORY, "modules", "privoxy", "etc", "config")
 
-            print(f"Privoxy初始检测端口为：{privoxy_port}")
+            logger.info(f"Privoxy初始检测端口为：{privoxy_port}")
 
             available_privoxy_port = get_available_port(privoxy_port)  # 获取可用端口
 
-            print(f"第一个Privoxy可用端口为 {available_privoxy_port}.")
+            logger.info(f"第一个Privoxy可用端口为 {available_privoxy_port}.")
 
             # 读取文件第794行的内容，获取当前端口号
             with open(privoxy_configure_file_install, 'r') as file:
@@ -84,9 +85,9 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
                 with open(privoxy_configure_file_install, 'w') as file:
                     file.writelines(lines)
 
-                print(f"端口已更新为：{available_privoxy_port}.")
+                logger.info(f"端口已更新为：{available_privoxy_port}.")
             else:
-                print(f"端口已经是：{current_privoxy_port}，无需修改.")
+                logger.info(f"端口已经是：{current_privoxy_port}，无需修改.")
 
             # 处理文件第1455行的SOCKS5代理设置
             expected_line = f"forward-socks5t / 127.0.0.1:{ss_port} ."
@@ -101,19 +102,26 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
                 with open(privoxy_configure_file_install, 'w') as file:
                     file.writelines(lines)
 
-                print(f"已更新 privoxy 配置中对应shadowsocks端口。")
+                logger.info(f"已更新 privoxy 配置中对应shadowsocks端口。")
             else:
-                print("shadowsocks端口已正确配置，无需修改。")
+                logger.info("shadowsocks端口已正确配置，无需修改。")
 
             return available_privoxy_port
         else:
+
+            
             current_privoxy_port = os.getenv('Privoxy_port')
             current_ss_port = os.getenv('Shadowsocks_port')
+            if current_privoxy_port == None or current_ss_port == None:
+                logger.error("未成功加载环境变量，请先执行 source ~/.bashrc ")
+                exit(1)
+
+            logger.info(f"Privoxy初始检测端口为：{current_privoxy_port}")
             available_privoxy_port = get_available_port(int(current_privoxy_port))
             if int(current_privoxy_port) == available_privoxy_port:
-                print(f"端口 {current_privoxy_port} 可用，无须修改端口。")
+                logger.info(f"端口 {current_privoxy_port} 可用，无须修改端口。")
             else:
-                print(f"第一个privoxy可用端口为 {available_privoxy_port}.")
+                logger.info(f"第一个privoxy可用端口为 {available_privoxy_port}.")
                 privoxy_configure_file_install = os.path.join(WORKING_DIRECTORY, "modules", "privoxy", "etc", "config")
                 with open(privoxy_configure_file_install, 'r') as file:
                     lines = file.readlines()
@@ -127,19 +135,19 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
                 # 写回修改后的内容
                 with open(privoxy_configure_file_install, 'w') as file:
                     file.writelines(lines)
-                print(f"配置文件端口已更新为：{available_privoxy_port}.")
+                logger.info(f"配置文件端口已更新为：{available_privoxy_port}.")
                 # 获取用户的 home 目录并拼接 .bashrc 文件路径
                 home_dir = os.path.expanduser("~")
                 bashrc_path = os.path.join(home_dir, ".bashrc")
                 # 修改 .bashrc 文件中的 Privoxy_port
                 modify_bashrc_variable(bashrc_path, "Privoxy_port", str(available_privoxy_port))
             
-
+            logger.info(f"shadowsocks初始检测端口为：{current_ss_port}")
             available_ss_port = get_available_port(int(current_ss_port))
             if int(current_ss_port) == available_ss_port:
-                print(f"端口 {current_ss_port} 可用，无须修改端口。")
+                logger.info(f"端口 {current_ss_port} 可用，无须修改端口。")
             else:
-                print(f"第一个shadowsocks可用端口为 {available_ss_port}.")
+                logger.info(f"第一个shadowsocks可用端口为 {available_ss_port}.")
                 privoxy_configure_file_install = os.path.join(WORKING_DIRECTORY, "modules", "privoxy", "etc", "config")
                 with open(privoxy_configure_file_install, 'r') as file:
                     lines = file.readlines()
@@ -156,7 +164,7 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
                 with open(privoxy_configure_file_install, 'w') as file:
                     file.writelines(lines)
 
-                print(f"已更新 privoxy 配置中对应shadowsocks端口。")
+                logger.info(f"已更新 privoxy 配置中对应shadowsocks端口。")
 
                 # 获取用户的 home 目录并拼接 .bashrc 文件路径
                 home_dir = os.path.expanduser("~")
@@ -186,7 +194,7 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
                 with open(SHADOWSOCKS_CONFIG_FILE, 'w', encoding='utf-8') as json_file_4:
                     json.dump(shadowsocks_config, json_file_4, ensure_ascii=False, indent=4)
 
-                print("Shadowsocks 配置文件已更新。")
+                logger.info("Shadowsocks 配置文件已更新。")
             
             return available_privoxy_port,available_ss_port
         
@@ -195,16 +203,17 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
         current_ss_port = os.getenv('Shadowsocks_port')
         
         try:
+            logger.info(f"shadowsocks初始检测端口为：{current_ss_port}")
             available_ss_port = get_available_port(int(current_ss_port))
         except TypeError as e:
-            print("未成功加载环境变量，请先执行 source ~/.bashrc ")
+            logger.error("未成功加载环境变量，请先执行 source ~/.bashrc ")
             exit(1)
 
 
         if int(current_ss_port) == available_ss_port:
-                print(f"端口 {current_ss_port} 可用，无须修改端口。")
+                logger.info(f"端口 {current_ss_port} 可用，无须修改端口。")
         else:
-            print(f"第一个shadowsocks可用端口为 {available_ss_port}.")
+            logger.info(f"第一个shadowsocks可用端口为 {available_ss_port}.")
             privoxy_configure_file_install = os.path.join(WORKING_DIRECTORY, "modules", "privoxy", "etc", "config")
             with open(privoxy_configure_file_install, 'r') as file:
                 lines = file.readlines()
@@ -221,7 +230,7 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
             with open(privoxy_configure_file_install, 'w') as file:
                 file.writelines(lines)
 
-            print(f"已更新 privoxy 配置中对应shadowsocks端口。")
+            logger.info(f"已更新 privoxy 配置中对应shadowsocks端口。")
 
             # 获取用户的 home 目录并拼接 .bashrc 文件路径
             home_dir = os.path.expanduser("~")
@@ -251,7 +260,7 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
             with open(SHADOWSOCKS_CONFIG_FILE, 'w', encoding='utf-8') as json_file_4:
                 json.dump(shadowsocks_config, json_file_4, ensure_ascii=False, indent=4)
 
-            print("Shadowsocks 配置文件已更新。")
+            logger.info("Shadowsocks 配置文件已更新。")
 
 
 

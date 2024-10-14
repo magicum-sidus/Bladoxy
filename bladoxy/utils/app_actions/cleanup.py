@@ -37,11 +37,11 @@ def remove_directories():
         try:
             if os.path.exists(dir_path):
                 shutil.rmtree(dir_path)
-                print(f"删除目录 {dir_path}")
+                logger.info(f"删除目录 {dir_path}")
             else:
-                print(f"目录 {dir_path} 不存在")
+                logger.warning(f"目录 {dir_path} 不存在")
         except Exception as e:
-            print(f"删除目录 {dir_path} 时出错: {e}")
+            logger.error(f"删除目录 {dir_path} 时出错: {e}")
 
 
 
@@ -63,14 +63,14 @@ def remove_bashrc_section(start_marker, end_marker):
             bashrc_content = file.read()
 
         if re.search(f"{start_marker}.*{end_marker}", bashrc_content, re.DOTALL):
-            print(f"从 .bashrc 中删除 {start_marker} 和 {end_marker} 之间的内容")
+            logger.info(f"从 .bashrc 中删除 {start_marker} 和 {end_marker} 之间的内容")
             bashrc_content = re.sub(f"{start_marker}.*?{end_marker}", '', bashrc_content, flags=re.DOTALL)
             with open(bashrc_path, 'w') as file:
                 file.write(bashrc_content)
         else:
-            print(f"未找到 {start_marker} 标记的环境变量。")
+            logger.warning(f"未找到 {start_marker} 标记的环境变量。")
     else:
-        print(f"未找到 .bashrc 文件.")
+        logger.warning(f"未找到 .bashrc 文件.")
 
 def stop_processes_by_name(process_name):
     """通过进程名停止进程"""
@@ -79,10 +79,10 @@ def stop_processes_by_name(process_name):
         pids = result.stdout.strip().split("\n")
         for pid in pids:
             if pid:
-                print(f"正在停止进程 {process_name}，PID: {pid}")
+                logger.info(f"正在停止进程 {process_name}，PID: {pid}")
                 os.kill(int(pid), 9)
     except Exception as e:
-        print(f"停止进程 {process_name} 时出现错误: {e}")
+        logger.error(f"停止进程 {process_name} 时出现错误: {e}")
 
 
 
@@ -95,7 +95,7 @@ def check_marker_in_bashrc(bashrc_path, start_marker):
             content = file.read()
         return re.search(re.escape(start_marker), content) is not None
     except FileNotFoundError:
-        print(f"未找到文件: {bashrc_path}")
+        logger.warning(f"未找到文件: {bashrc_path}")
         return False
 
 
@@ -105,7 +105,7 @@ def check_marker_in_bashrc(bashrc_path, start_marker):
 def finalize():
     # 获取用户确认
     if user_confirmation("您想要运行 Bladoxy清理程序 吗"):
-        print("正在清理...")
+        logger.info("正在清理...")
         # 删除文件
         remove_directories()
 
@@ -122,16 +122,16 @@ def finalize():
         stop_processes_by_name('privoxy')
         stop_processes_by_name('sslocal')
 
-        print("成功停止进程")
+        logger.info("成功停止进程")
 
-        print("Bladoxy 清理成功！")
-        print("请执行 source ~/.bashrc 刷新环境变量.")
+        logger.info("Bladoxy 清理成功！")
+        logger.warning("请执行 source ~/.bashrc 刷新环境变量.")
     else:
-        print("清理已取消")
+        logger.warning("清理已取消")
 
 
 def finalizeToinit():
-    print("正在清理Bladoxy...")
+    logger.info("正在清理Bladoxy...")
     # 删除文件
     remove_directories()
 
@@ -148,10 +148,10 @@ def finalizeToinit():
     stop_processes_by_name('privoxy')
     stop_processes_by_name('sslocal')
 
-    print("成功停止进程")
+    logger.info("成功停止进程")
 
-    print("Bladoxy 清理成功！")
-    print("请执行 source ~/.bashrc 刷新环境变量.")
+    logger.info("Bladoxy 清理成功！")
+    logger.warning("请执行 source ~/.bashrc 刷新环境变量.")
 
 
 if __name__ == "__main__":

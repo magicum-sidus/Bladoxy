@@ -15,6 +15,7 @@
 
 
 import bladoxy
+from bladoxy.utils.logger import logger
 
 import os
 import re
@@ -32,7 +33,7 @@ def remove_proxy_from_bashrc(bashrc_path, start_marker, end_marker):
         # 查找 START_MARKER 和 END_MARKER 之间的内容
         pattern = re.escape(start_marker) + r'.*?' + re.escape(end_marker)
         if re.search(pattern, content, re.DOTALL):
-            print("从 .bashrc 中删除环境变量")
+            logger.info("从 .bashrc 中删除环境变量")
             # 删除标记之间的内容
             updated_content = re.sub(pattern, '', content, flags=re.DOTALL)
 
@@ -40,12 +41,12 @@ def remove_proxy_from_bashrc(bashrc_path, start_marker, end_marker):
             with open(bashrc_path, 'w') as file:
                 file.write(updated_content)
         else:
-            print("未找到 proxy 环境变量")
+            logger.warning("未找到 proxy 环境变量")
     
     except FileNotFoundError:
-        print(f"未找到文件: {bashrc_path}")
+        logger.error(f"未找到文件: {bashrc_path}")
     except Exception as e:
-        print(f"修改 .bashrc 时出错: {e}")
+        logger.error(f"修改 .bashrc 时出错: {e}")
 
 
 
@@ -64,19 +65,19 @@ def add_proxy_to_bashrc(bashrc_path, start_marker, end_marker, privoxy_port):
 
         # 如果没有找到开始标记，添加代理设置
         if not re.search(re.escape(start_marker), content):
-            print("向 .bashrc 添加 http(s)_proxy 环境变量")
+            logger.info("向 .bashrc 添加 http(s)_proxy 环境变量")
             with open(bashrc_path, 'a') as file:
                 file.write(f"\n{start_marker}\n")
                 file.write(f'export http_proxy="{http_proxy_value}"\n')
                 file.write(f'export https_proxy="{https_proxy_value}"\n')
                 file.write(f"{end_marker}\n")
         else:
-            print("proxy 环境变量已经存在")
+            logger.warning("proxy 环境变量已经存在")
     
     except FileNotFoundError:
-        print(f"未找到文件: {bashrc_path}")
+        logger.error(f"未找到文件: {bashrc_path}")
     except Exception as e:
-        print(f"修改 .bashrc 时出错: {e}")
+        logger.error(f"修改 .bashrc 时出错: {e}")
 
 
 
@@ -86,11 +87,11 @@ def set_environment_variables(ss_port,privoxy_port,is_init = False):
         
         conda_env_path = os.environ.get("CONDA_PREFIX")
         if conda_env_path:
-            print(f"当前 Conda 环境路径: {conda_env_path}")
+            logger.info(f"当前 Conda 环境路径: {conda_env_path}")
         else:
-            print("未检测到 Conda 环境")
+            logger.warning("未检测到 Conda 环境")
 
-        print("正在设置环境变量")
+        logger.info("正在设置环境变量")
 
         # 变量定义
         bladoxy_version = "v1.3.0"
@@ -125,13 +126,13 @@ def set_environment_variables(ss_port,privoxy_port,is_init = False):
                 bashrc_content = bashrc.read()
 
             if start_marker not in bashrc_content:
-                print(f"向 .bashrc 添加环境变量块: {start_marker.strip('# ')}")
+                logger.info(f"向 .bashrc 添加环境变量块: {start_marker.strip('# ')}")
                 with open(bashrc_path, "a") as bashrc:
                     bashrc.write(f"\n{start_marker}\n")
                     bashrc.writelines(content_lines)
                     bashrc.write(f"{end_marker}\n")
             else:
-                print(f"{start_marker.strip('# ')} 环境变量已经存在")
+                logger.warning(f"{start_marker.strip('# ')} 环境变量已经存在")
 
         # 添加 Bladoxy 环境变量到 .bashrc
         bladoxy_env_content = [

@@ -21,6 +21,7 @@ import json
 import curses
 
 from bladoxy.utils.get_available_port import get_available_port
+from bladoxy.utils.logger import logger
 import bladoxy
 
 
@@ -29,14 +30,14 @@ import bladoxy
     
 
 def ssconfig_handler():
-    print("处理ss配置...")
+    logger.info("处理ss配置...")
     
     # 1. Prompt the user to input the configuration file path
     config_path = input("Please enter the path to the configuration file: ")
 
     # 2. Check if the configuration file exists
     if not os.path.isfile(config_path):
-        print("Configuration file does not exist.")
+        logger.warning("配置文件不存在")
         exit(1)
 
     # 3. Check if the configuration file is valid (Clash YAML configuration file)
@@ -45,12 +46,12 @@ def ssconfig_handler():
             config_data = yaml.safe_load(file)
             proxies = config_data.get('proxies', [])
     except:
-        print("Configuration file is not a valid YAML file.")
+        logger.error("配置文件不是合法的 YAML 文件！")
         exit(1)
 
     # Check if 'proxies' field has nodes and is valid
     if not proxies:
-        print("The configuration file does not contain any proxy nodes.")
+        logger.error("配置文件不包含 proxy 节点！")
         exit(1)
 
     valid = True
@@ -60,7 +61,7 @@ def ssconfig_handler():
             break
 
     if not valid:
-        print("The configuration file contains invalid SS nodes.")
+        logger.error("配置文件不包含合法 SS 节点！")
         exit(1)
 
     # 4. Copy the configuration file to the profiles directory
@@ -68,11 +69,15 @@ def ssconfig_handler():
     profiles_dir = os.path.join(WORKING_DIRECTORY, 'nodes_profiles')
     os.makedirs(profiles_dir, exist_ok=True)
     shutil.copy(config_path, os.path.join(profiles_dir, 'nodes_profile.yaml'))
-    print(f"Configuration file has been copied to the {profiles_dir} directory.")
+    logger.info(f"配置文件已经保存到 {profiles_dir}")
+
+
+    logger.info(f"shadowsocks初始检测端口为：1080")
+    ss_local_port = get_available_port(start_port=1080)
+    logger.info(f"第一个shadowsocks可用端口为 {ss_local_port}.")
 
 
 
-    ss_local_port = get_available_port()
 
     all_node_info = {
         "servers": [],
@@ -93,7 +98,7 @@ def ssconfig_handler():
     with open(ALL_NODES_INFO_FILE, 'w', encoding='utf-8') as json_file:
         json.dump(all_node_info, json_file, ensure_ascii=False, indent=4)
     
-    print("Configuration file has been converted and saved as all_nodes_info.json.")
+    # print("Configuration file has been converted and saved as all_nodes_info.json.")
 
     # 7. Save node names and their index to a separate file (name_index_mapping.json)
     node_name_index = {}
@@ -107,7 +112,7 @@ def ssconfig_handler():
     with open(NODE_NAME_INDEX_FILE, 'w', encoding='utf-8') as json_file:
         json.dump(node_name_index, json_file, ensure_ascii=False, indent=4)
 
-    print(f"Node names and their indices have been saved to {NODE_NAME_INDEX_FILE}.")
+    # print(f"Node names and their indices have been saved to {NODE_NAME_INDEX_FILE}.")
 
     return ss_local_port
 
@@ -234,8 +239,8 @@ def node_selector(stdscr, filepath):
         selected_node_info = selected_node
 
         # 显示选中的节点信息
-        stdscr.addstr(0, 0, f"You selected: {selected_node_info['name']}")
-        stdscr.addstr(1, 0, f"Details: {selected_node_info}")
+        stdscr.addstr(0, 0, f"你选择了: {selected_node_info['name']}")
+        stdscr.addstr(1, 0, f"节点信息: {selected_node_info}")
         stdscr.addstr(6, 0, "请按回车继续……")
         stdscr.refresh()
         stdscr.getch()
@@ -252,7 +257,7 @@ def node_selector(stdscr, filepath):
 
 
 def update_ss_config(node_name):
-    print("更新ss配置...")
+    logger.info("更新ss配置...")
     WORKING_DIRECTORY = os.path.dirname(bladoxy.__file__)
     NODE_NAME_INDEX_FILE = os.path.join(WORKING_DIRECTORY, 'nodes_profiles','name_index_mapping.json')
 
@@ -260,10 +265,10 @@ def update_ss_config(node_name):
     with open(NODE_NAME_INDEX_FILE, 'r', encoding='utf-8') as json_file:
         node_name_index = json.load(json_file)
 
-    # print(node_name_index)
+  
 
     selected_node_index = node_name_index.get(node_name)
-    print(selected_node_index)
+
 
 
     ALL_NODES_INFO_FILE = os.path.join(WORKING_DIRECTORY, 'nodes_profiles','all_nodes_info.json')
@@ -276,9 +281,7 @@ def update_ss_config(node_name):
     ss_local_port = all_nodes_info.get('local_port', 1080)
     timeout = all_nodes_info.get('timeout', 300)
     select_node_info = servers_list[selected_node_index]
-    print(select_node_info)
-    print(ss_local_port)
-    print(timeout)
+
 
     # 更新 shadowsocks.json 文件
 
@@ -296,32 +299,32 @@ def update_ss_config(node_name):
     with open(SHADOWSOCKS_CONFIG_FILE, 'w', encoding='utf-8') as json_file_3:
         json.dump(shadowsocks_config, json_file_3, ensure_ascii=False, indent=4)
 
-    print("Shadowsocks 配置文件已更新。")
+    logger.info("Shadowsocks 配置文件已更新。")
 
 
 
 
 def change_node():
-    print("修改节点...")
+    logger.info("修改节点...")
     WORKING_DIRECTORY = os.path.dirname(bladoxy.__file__)
     nodes_profile_file = os.path.join(WORKING_DIRECTORY, 'nodes_profiles', 'nodes_profile.yaml')
 
     if not os.path.isfile(nodes_profile_file):
-        print("Nodes profile file does not exist.")
-        print("请重新上传节点配置文件!")
-        exit()
+        logger.error("节点配置文件不存在！")
+        logger.error("请重新上传节点配置文件!")
+        exit(1)
 
     # 使用 curses.wrapper 调用 node_selector 并返回选中的节点
     selected_node = curses.wrapper(node_selector, nodes_profile_file)
 
     if selected_node:
-        print(f"Selected node: {selected_node['name']}")
+        logger.info(f"已选择节点: {selected_node['name']}")
         # 进一步处理选中的节点，更新配置文件
         update_ss_config(selected_node['name'])
 
 
     else:
-        print("No node selected.")
+        logger.warning("没有选择任何节点！")
 
 
 

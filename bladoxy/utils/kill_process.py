@@ -15,6 +15,7 @@
 
 import subprocess
 import os
+from bladoxy.utils.logger import logger
 
 
 def get_pids_by_name(process_name):
@@ -25,17 +26,17 @@ def get_pids_by_name(process_name):
         pids = result.stdout.strip().split("\n")
         return [pid for pid in pids if pid]
     except Exception as e:
-        print(f"获取进程 {process_name} 的 PID 时出错: {e}")
+        logger.warning(f"获取进程 {process_name} 的 PID 时出错: {e}")
         return []
 
 def kill_processes(pids):
     """根据 PID 列表终止进程"""
     for pid in pids:
         try:
-            print(f"正在终止 PID: {pid}")
+            logger.info(f"正在终止 PID: {pid}")
             os.kill(int(pid), 9)  # 使用信号 9 (SIGKILL) 杀掉进程
         except Exception as e:
-            print(f"无法终止 PID {pid}: {e}")
+            logger.error(f"无法终止 PID {pid}: {e}")
 
 def kill_possible_processes():
     # 获取并杀掉 'privoxy' 进程
@@ -43,14 +44,14 @@ def kill_possible_processes():
     if privoxy_pids:
         kill_processes(privoxy_pids)
     else:
-        print("未找到 'privoxy' 进程。")
+        logger.warning("未找到 'privoxy' 进程。")
 
     # 获取并杀掉 'sslocal' 进程
     sslocal_pids = get_pids_by_name('sslocal')
     if sslocal_pids:
         kill_processes(sslocal_pids)
     else:
-        print("未找到 'sslocal' 进程。")
+        logger.warning("未找到 'sslocal' 进程。")
 
 
 def kill_possible_sslocal_processes():
@@ -59,4 +60,4 @@ def kill_possible_sslocal_processes():
     if sslocal_pids:
         kill_processes(sslocal_pids)
     else:
-        print("未找到 'sslocal' 进程。")
+        logger.warning("未找到 'sslocal' 进程。")

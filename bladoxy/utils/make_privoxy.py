@@ -14,11 +14,13 @@
 
 
 import bladoxy
+from bladoxy.utils.logger import logger
 
 import os
 import subprocess
 import tarfile
 import shutil
+from termcolor import colored
 
 import tempfile
 
@@ -26,12 +28,12 @@ import tempfile
 def run_command(command):
     """Helper function to run a shell command and print its output."""
     result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
-    print(result.stdout)
+    print(colored(result.stdout,'green'))
     return result
 
 def extract_tar_gz(tar_path, extract_to):
     """Extracts a .tar.gz file to a specified directory."""
-    print(f"Extracting {tar_path} to {extract_to}")
+    logger.info(f"解压缩 {tar_path} 到 {extract_to}")
     with tarfile.open(tar_path, "r:gz") as tar:
         tar.extractall(path=extract_to)
 
@@ -54,14 +56,14 @@ def get_first_folder_in_tar(tar_path):
 
 def clear_directory(directory):
     if os.path.exists(directory):
-        print(f"Clearing directory: {directory}")
+        logger.info(f"清空路径: {directory}")
         shutil.rmtree(directory)
     os.makedirs(directory, exist_ok=True)  # Recreate the directory
 
 
 def compile_and_install(source_dir, prefix):
     """Runs the standard ./configure, make, make install commands."""
-    print(f"Compiling and installing from {source_dir}")
+    logger.info(f"从 {source_dir} 编译安装")
     os.chdir(source_dir)
     run_command(f"./configure --prefix={prefix}")
     run_command("make")
@@ -69,7 +71,7 @@ def compile_and_install(source_dir, prefix):
 
 
 def modify_privoxy_compile_config(privoxy_source_dir,pcre_install_dir,zlib_install_dir):
-    print("修改编译配置文件")
+    logger.info("修改编译配置文件")
 
     # 配置文件路径
     PRIVOXY_CONFIGURE_FILE = os.path.join(privoxy_source_dir,"configure.in")
@@ -103,9 +105,9 @@ def modify_privoxy_compile_config(privoxy_source_dir,pcre_install_dir,zlib_insta
             with open(PRIVOXY_CONFIGURE_FILE, 'w') as file:
                 file.writelines(lines)
 
-            print(f"成功将pcre路径添加到 {PRIVOXY_CONFIGURE_FILE} 中")
+            logger.info(f"成功将pcre路径添加到 {PRIVOXY_CONFIGURE_FILE} 中")
         except Exception as e:
-            print(f"未能将pcre路径添加到 {PRIVOXY_CONFIGURE_FILE} 中: {e}")
+            logger.error(f"未能将pcre路径添加到 {PRIVOXY_CONFIGURE_FILE} 中: {e}")
 
         # 重新读取文件内容（确保包括刚刚插入的两行）
         with open(PRIVOXY_CONFIGURE_FILE, 'r') as file:
@@ -122,20 +124,20 @@ def modify_privoxy_compile_config(privoxy_source_dir,pcre_install_dir,zlib_insta
             with open(PRIVOXY_CONFIGURE_FILE, 'w') as file:
                 file.writelines(modified_lines)
 
-            print(f"成功将zlib路径添加到 {PRIVOXY_CONFIGURE_FILE} 中")
+            logger.info(f"成功将zlib路径添加到 {PRIVOXY_CONFIGURE_FILE} 中")
         except Exception as e:
-            print(f"未能将zlib路径添加到 {PRIVOXY_CONFIGURE_FILE} 中: {e}")
+            logger.error(f"未能将zlib路径添加到 {PRIVOXY_CONFIGURE_FILE} 中: {e}")
 
 
 def compile_and_install_privoxy(privoxy_source_dir,privoxy_install_dir,zlib_install_dir):
-    print("正在编译安装privoxy")
+    logger.info("正在编译安装privoxy")
     os.chdir(privoxy_source_dir)
     # 运行 autoheader 和 autoconf
     try:
         subprocess.run(['autoheader'], check=True)
         subprocess.run(['autoconf'], check=True)
     except subprocess.CalledProcessError as e:
-        print(f"运行 autoheader 或 autoconf 失败: {e}")
+        logger.error(f"运行 autoheader 或 autoconf 失败: {e}")
         return
 
     # 设置 CPPFLAGS 和 LDFLAGS 环境变量
@@ -158,16 +160,16 @@ def compile_and_install_privoxy(privoxy_source_dir,privoxy_install_dir,zlib_inst
         # 安装
         subprocess.run(['make', 'install'], check=True)
 
-        print("Privoxy 编译安装成功")
+        logger.info("Privoxy 编译安装成功")
     except subprocess.CalledProcessError as e:
-        print(f"编译或安装 Privoxy 失败: {e}")
+        logger.error(f"编译或安装 Privoxy 失败: {e}")
 
 
 def make_privoxy():
     WORKING_DIRECTORY = os.path.dirname(bladoxy.__file__)
 
     # M4
-    print("解压本地m4源代码")
+    logger.info("解压m4源代码")
     m4_tar_path = os.path.join(WORKING_DIRECTORY,'modules','dependencies_src','m4-latest.tar.gz')
     EXTRACT_TARGET_PATH = os.path.join(WORKING_DIRECTORY,'modules','dependencies_src','extract_targets')
     if not os.path.isdir(EXTRACT_TARGET_PATH):
@@ -188,14 +190,14 @@ def make_privoxy():
 
     clear_directory(DEPENDENCIES_DIR)
     
-    print("正在编译安装m4")
+    logger.info("正在编译安装m4")
     m4_install_dir = os.path.join(DEPENDENCIES_DIR,'m4')
     compile_and_install(m4_source_dir, m4_install_dir)
     
     os.environ["PATH"] += f":{m4_install_dir}/bin"
 
     # Autoconf
-    print("解压本地autoconf源代码")
+    logger.info("解压autoconf源代码")
     
     autoconf_tar_path = os.path.join(WORKING_DIRECTORY,'modules','dependencies_src','autoconf-latest.tar.gz')
     extract_tar_gz(autoconf_tar_path, EXTRACT_TARGET_PATH)
@@ -203,14 +205,14 @@ def make_privoxy():
     autoconf_folder_name = get_first_folder_in_tar(autoconf_tar_path)
     autoconf_source_dir = os.path.join(EXTRACT_TARGET_PATH,autoconf_folder_name)
     
-    print("正在编译安装autoconf")
+    logger.info("正在编译安装autoconf")
     autoconf_install_dir = os.path.join(DEPENDENCIES_DIR,'autoconf')
     compile_and_install(autoconf_source_dir, autoconf_install_dir)
     
     os.environ["PATH"] += f":{autoconf_install_dir}/bin"
 
     # PCRE
-    print("解压本地pcre源代码")
+    logger.info("解压pcre源代码")
     
     pcre_tar_path = os.path.join(WORKING_DIRECTORY,'modules','dependencies_src','pcre-8.44.tar.gz')
     extract_tar_gz(pcre_tar_path, EXTRACT_TARGET_PATH)
@@ -218,12 +220,12 @@ def make_privoxy():
     pcre_folder_name = get_first_folder_in_tar(pcre_tar_path)
     pcre_source_dir = os.path.join(EXTRACT_TARGET_PATH,pcre_folder_name)
     
-    print("正在编译安装pcre")
+    logger.info("正在编译安装pcre")
     pcre_install_dir = os.path.join(DEPENDENCIES_DIR,'pcre')
     compile_and_install(pcre_source_dir, pcre_install_dir)
 
     # Zlib
-    print("解压本地zlib源代码")
+    logger.info("解压zlib源代码")
     
     zlib_tar_path = os.path.join(WORKING_DIRECTORY,'modules','dependencies_src','zlib-1.3.1.tar.gz')
     extract_tar_gz(zlib_tar_path, EXTRACT_TARGET_PATH)
@@ -231,12 +233,12 @@ def make_privoxy():
     zlib_folder_name = get_first_folder_in_tar(zlib_tar_path)
     zlib_source_dir = os.path.join(EXTRACT_TARGET_PATH,zlib_folder_name)
     
-    print("正在编译安装zlib")
+    logger.info("正在编译安装zlib")
     zlib_install_dir = os.path.join(DEPENDENCIES_DIR,'zlib')
     compile_and_install(zlib_source_dir, zlib_install_dir)
 
     # Privoxy
-    print("解压本地privoxy源代码")
+    logger.info("解压privoxy源代码")
     
     privoxy_tar_path = os.path.join(WORKING_DIRECTORY,'modules','dependencies_src','privoxy-3.0.34-stable-src.tar.gz')
     extract_tar_gz(privoxy_tar_path, EXTRACT_TARGET_PATH)

@@ -17,6 +17,7 @@ import os
 import re
 from bladoxy.utils.kill_process import kill_possible_processes
 from bladoxy.utils.set_env import remove_proxy_from_bashrc
+from bladoxy.utils.logger import logger
 
 
 def check_marker_in_bashrc(bashrc_path, start_marker):
@@ -26,13 +27,13 @@ def check_marker_in_bashrc(bashrc_path, start_marker):
             content = file.read()
         return re.search(re.escape(start_marker), content) is not None
     except FileNotFoundError:
-        print(f"未找到文件: {bashrc_path}")
+        logger.warning(f"未找到文件: {bashrc_path}")
         return False
 
 
 def stop():
 
-    print("正在停止进程...")
+    logger.info("正在停止进程...")
     # 定义开始和结束标记
     START_MARKER_PROXY = "######## START MY_PROXY ########"
     END_MARKER_PROXY = "######## END MY_PROXY ########"
@@ -44,7 +45,7 @@ def stop():
     # 从 .bashrc 文件中删除代理环境变量
     remove_proxy_from_bashrc(bashrc_path, START_MARKER_PROXY, END_MARKER_PROXY)
     kill_possible_processes()
-    print("成功停止进程")
+    logger.info("成功停止进程")
 
 
 

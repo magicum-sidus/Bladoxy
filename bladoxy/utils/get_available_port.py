@@ -14,10 +14,11 @@
 
 
 import subprocess
+from bladoxy.utils.logger import logger
 
 def get_available_port(start_port=1080):
     port = start_port
-    print(f"Initial Shadowsocks port check starts at: {port}")
+
 
     while True:
         # Check if the port is in use
@@ -27,14 +28,12 @@ def get_available_port(start_port=1080):
             text=True
         )
         if f":{port} " not in result.stdout:
-            print(f"Port {port} is available.")
+            logger.info(f"端口 {port} 可用")
             break
         else:
-            print(f"Port {port} is already in use.")
+            logger.info(f"端口 {port} 已经被占用")
             port += 1
 
-    # Output the first available port
-    print(f"The first available port is {port}.")
     return port
 
 if __name__ == "__main__":
