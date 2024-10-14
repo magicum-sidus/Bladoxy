@@ -178,7 +178,13 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
     else:
         # 只修改ss端口
         current_ss_port = os.getenv('Shadowsocks_port')
-        available_ss_port = get_available_port(int(current_ss_port))
+        
+        try:
+            available_ss_port = get_available_port(int(current_ss_port))
+        except TypeError as e:
+            print("未成功加载环境变量，请先执行 source ~/.bashrc ")
+
+
         if int(current_ss_port) == available_ss_port:
                 print(f"端口 {current_ss_port} 可用，无须修改端口。")
         else:

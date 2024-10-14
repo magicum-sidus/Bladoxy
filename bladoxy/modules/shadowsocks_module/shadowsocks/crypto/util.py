@@ -57,9 +57,13 @@ def find_library(possible_lib_names, search_symbol, library_name):
         if os.name == "nt":
             paths.extend(find_library_nt(name))
         else:
-            path = ctypes.util.find_library(name)
-            if path:
-                paths.append(path)
+            try:
+                path = ctypes.util.find_library(name)
+                if path:
+                    paths.append(path)
+            except:
+                print("Can not find ", name)          # shadowsocks补丁
+
 
     if not paths:
         # We may get here when find_library fails because, for example,

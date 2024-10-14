@@ -9,6 +9,8 @@ from bladoxy.utils.start_process import start_sslocal,start_privoxy
 
 from bladoxy.utils.app_actions.cleanup import finalizeToinit
 
+from bladoxy.utils.make_privoxy import make_privoxy
+
 from termcolor import colored
 
 import os
@@ -46,7 +48,7 @@ def initialize():
             finalizeToinit()
         else:
             print("重装已取消")
-            print("正在退出安装程序……")
+            print("正在退出初始化安装程序……")
             exit(1)
     else:
         print("未检测到已安装的 SSPrivoxy")
@@ -121,7 +123,8 @@ Bladoxy项目使用了以下开源项目：
 
     WORKING_DIRECTORY = os.path.dirname(bladoxy.__file__)
 
-
+    
+    
     shadowsocks_config_directory = os.path.join(WORKING_DIRECTORY, 'modules','shadowsocks_config')
 
 
@@ -155,7 +158,8 @@ Bladoxy项目使用了以下开源项目：
 
     ss_port = ssconfig_handler()
 
-
+    # 在这里插入编译安装privoxy的逻辑
+    make_privoxy()
 
 
     # configure privoxy

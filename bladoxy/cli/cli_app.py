@@ -10,9 +10,27 @@ from bladoxy.utils.app_actions.update_profile import update_profile
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Bladoxy is a linux network assistant.")
-    parser.add_argument("action", help="Select the action you want to perform.",
-                        choices=["init", "cleanup", "run", "stop", "uptProf","uptNode"])
+    # parser = argparse.ArgumentParser(description="Bladoxy is a linux network assistant.")
+    parser = argparse.ArgumentParser(
+        description="Bladoxy is a Linux network assistant.",
+        formatter_class=argparse.RawTextHelpFormatter
+    )
+    # parser.add_argument("action", help="Select the action you want to perform.",
+    #                     choices=["init", "cleanup", "run", "stop", "uptProf","uptNode"])
+
+    parser.add_argument(
+        "action", 
+        help=(
+            "Select the action you want to perform:\n"
+            "  init    : Initialize the system.\n"
+            "  cleanup : Finalize and clean up resources.\n"
+            "  run     : Start the main operations.\n"
+            "  stop    : Stop any running processes.\n"
+            "  uptProf : Update user profile.\n"
+            "  uptNode : Update node configuration."
+        ),
+        choices=["init", "cleanup", "run", "stop", "uptProf", "uptNode"]
+    )
     
     args = parser.parse_args()
 
