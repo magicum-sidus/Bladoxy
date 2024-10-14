@@ -12,7 +12,7 @@ def parse_requirements(filename):
 
 setup(
     name="bladoxy",
-    version="1.3.0-alpha",
+    version="1.3.0-alpha1",
     license='http://www.apache.org/licenses/LICENSE-2.0',
     description="Bladoxy is a linux network assistant.",
     author='Magicum Sidus',
@@ -37,9 +37,10 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: Implementation :: CPython',
-        # Add other relevant classifiers
+        'Programming Language :: Python :: Implementation :: PyPy',
+        'Topic :: Internet :: Proxy Servers'
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.5, <3.10',
     long_description=long_description,
 )
 

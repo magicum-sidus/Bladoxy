@@ -25,6 +25,7 @@ from bladoxy.utils.start_process import start_sslocal,start_privoxy
 from bladoxy.utils.app_actions.cleanup import finalizeToinit
 
 from bladoxy.utils.make_privoxy import make_privoxy
+from bladoxy.utils.print_license import print_license
 
 from termcolor import colored
 
@@ -66,60 +67,18 @@ def initialize():
             print("正在退出初始化安装程序……")
             exit(1)
     else:
-        print("未检测到已安装的 SSPrivoxy")
+        print("未检测到已安装的 Bladoxy")
 
 
 
 
 
     logger.info("Initializing the environment...")
-    # 嵌入的许可证文本
-    LICENSE = colored("""
-Software License (English version):
 
-MIT License
 
-Copyright (c) [2024] [Magicum Sidus]
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+    print_license()
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-Acknowledgements:
-The Bladoxy makes use of the following open source projects:
-- shadowsocks by https://shadowsocks.org/
-- privoxy by https://www.privoxy.org/
-
-We extend our gratitude to these projects for their contributions to the open source community.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Welcome to provide better suggestions for Bladoxy!
-
-软件许可（中文版本）：
-
-MIT 许可证
-
-版权所有 (c) [2024] [Magicum Sidus]
-
-特此免费授予任何人获得本软件和相关文档文件（“软件”）副本的权利，无限制地处理本软件，包括但不限于使用、复制、修改、合并、出版、发行、授权、和/或出售本软件的副本，并允许向其提供本软件的人这样做，但须符合以下条件：
-
-上述版权声明和本许可声明应包含在本软件的所有副本或实质性部分中。
-
-致谢：
-Bladoxy项目使用了以下开源项目：
-- shadowsocks 由 https://shadowsocks.org/
-- privoxy 由 https://www.privoxy.org/
-
-我们对这些项目对开源社区的贡献表示感谢。
-
-本软件按“原样”提供，不提供任何形式的保证，明示或暗示，包括但不限于适销性、适用于特定目的和不侵权的保证。在任何情况下，作者或版权持有人均不对任何索赔、损害或其他责任承担责任，无论是在合同诉讼、侵权行为或其他与本软件或本软件的使用或其他交易有关的诉讼中。
-
-欢迎对 Bladoxy 提供更好的建议！
-    """, 'cyan')
-
-    # 显示许可证文本
-    print(LICENSE)
 
     # 提示用户接受许可证
     while True:

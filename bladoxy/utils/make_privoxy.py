@@ -35,12 +35,7 @@ def extract_tar_gz(tar_path, extract_to):
     with tarfile.open(tar_path, "r:gz") as tar:
         tar.extractall(path=extract_to)
 
-# def get_first_folder_in_tar(tar_path):
-#     """Get the name of the first folder inside a .tar.gz file."""
-#     with tarfile.open(tar_path, "r:gz") as tar:
-#         for member in tar.getmembers():
-#             if member.isdir():
-#                 return member.name.split('/')[0]
+
 
 
 def get_first_folder_in_tar(tar_path):
