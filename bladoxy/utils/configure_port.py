@@ -1,3 +1,18 @@
+# Copyright 2024 Magicum Sidus
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
 import bladoxy
 from bladoxy.utils.get_available_port import get_available_port
 
@@ -183,6 +198,7 @@ def configure_port(ss_port=1080, privoxy_port=8118,is_init = False,onlyss = Fals
             available_ss_port = get_available_port(int(current_ss_port))
         except TypeError as e:
             print("未成功加载环境变量，请先执行 source ~/.bashrc ")
+            exit(1)
 
 
         if int(current_ss_port) == available_ss_port:

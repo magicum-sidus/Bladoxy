@@ -1,3 +1,18 @@
+# Copyright 2024 Magicum Sidus
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
 import bladoxy
 import os
 
@@ -104,37 +119,7 @@ def check_marker_in_bashrc(bashrc_path, start_marker):
 
 
 
-# def finalize():
-#     bashrc_path = os.path.expanduser("~/.bashrc")
-#     START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"
-#     if check_marker_in_bashrc(bashrc_path, START_MARKER_BLADOXY):
-#         # 获取用户确认
-#         if user_confirmation("您想要运行 Bladoxy清理程序 吗"):
-#             print("正在清理...")
-#             # 删除文件
-#             remove_directories()
 
-#             # 删除 proxy 和 Bladoxy 环境变量
-#             START_MARKER_PROXY = "######## START MY_PROXY ########"
-#             END_MARKER_PROXY = "######## END MY_PROXY ########"
-#             START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"
-#             END_MARKER_BLADOXY = "######## END MY_BLADOXY ########"
-
-#             remove_bashrc_section(START_MARKER_PROXY, END_MARKER_PROXY)
-#             remove_bashrc_section(START_MARKER_BLADOXY, END_MARKER_BLADOXY)
-
-#             # 停止 'privoxy' 和 'sslocal' 进程
-#             stop_processes_by_name('privoxy')
-#             stop_processes_by_name('sslocal')
-
-#             print("成功停止进程")
-
-#             print("Bladoxy 清理成功！")
-#             print("请执行 source ~/.bashrc 刷新环境变量.")
-#         else:
-#             print("清理已取消")
-#     else:
-#         print("请先执行 bladoxy init 进行初始化！")
 
 def finalize():
     # 获取用户确认
