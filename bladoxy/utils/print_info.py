@@ -13,6 +13,9 @@
 # limitations under the License.
 
 
+BLADOXY_VERSION = "v1.4.3"
+
+
 def echo_version_info():
   print(" /$$$$$$$  /$$                 /$$                              ")
   print("| $$__  $$| $$                | $$                              ")

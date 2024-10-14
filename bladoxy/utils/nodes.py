@@ -33,7 +33,7 @@ def ssconfig_handler():
     logger.info("处理ss配置...")
     
     # 1. Prompt the user to input the configuration file path
-    config_path = input("Please enter the path to the configuration file: ")
+    config_path = input("请输入配置文件的路径:")
 
     # 2. Check if the configuration file exists
     if not os.path.isfile(config_path):

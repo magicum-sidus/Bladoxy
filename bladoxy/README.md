@@ -1,4 +1,4 @@
-# ⚔️Bladoxy (原SSprivoxy) V1.4.0 使用说明
+# ⚔️Bladoxy (原SSprivoxy) V1.4.3 使用说明
 
 Author *：M.S.*
 
@@ -8,7 +8,7 @@ Author *：M.S.*
 
 
 
-> #### SSPrivoxy 从 v1.3.0 已更名为：Bladoxy（Blade⚔️+Proxy）（刀锋代理）
+> #### SSPrivoxy 从 v1.3.0 已更名为：Bladoxy（⚔️Blade+Proxy）（刀锋代理）
 > #### v1.2.0 最新支持功能：自动循环检测可用端口（避免多用户进程冲突）
 >
 > #### v1.3.0 最新支持功能：更新机制，代码全部迁移到 pypi平台，可以使用 pip 机制安装、卸载、更新
@@ -35,7 +35,15 @@ Author *：M.S.*
 
 ### 二、安装说明
 
-通过 pip 安装、更新、卸载
+从 SSprivoxy 升级的用户，请先卸载 SSprivoxy.
+
+执行命令:
+
+```bash 
+ssprivoxy uninstall
+```
+
+通过 pip 安装、更新、卸载:
 
 1）安装：
 
@@ -70,7 +78,7 @@ source ~/.bashrc
 
 ### 三、参数用法
 
-下面命令选择一个执行
+下面命令选择一个执行:
 
 ```bash
 bladoxy init
@@ -90,7 +98,7 @@ bladoxy uptNode
 
 切换节点时：
 
-上下键切换同一页的节点，左右键翻页
+> 上下键（或者鼠标滚轮）切换同一页的节点，左右键翻页
 
 
 

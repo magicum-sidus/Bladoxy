@@ -18,6 +18,7 @@ import re
 
 import bladoxy
 from bladoxy.utils.logger import logger
+from bladoxy.utils.print_info import BLADOXY_VERSION
 
 
 
@@ -94,7 +95,7 @@ def set_environment_variables(ss_port,privoxy_port,is_init = False):
         logger.info("正在设置环境变量")
 
         # 变量定义
-        bladoxy_version = "v1.3.0"
+        bladoxy_version = BLADOXY_VERSION
         START_MARKER_PROXY = "######## START MY_PROXY ########"
         END_MARKER_PROXY = "######## END MY_PROXY ########"
         START_MARKER_BLADOXY = "######## START MY_BLADOXY ########"

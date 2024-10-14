@@ -130,40 +130,77 @@ def modify_privoxy_compile_config(privoxy_source_dir,pcre_install_dir,zlib_insta
             logger.error(f"未能将zlib路径添加到 {PRIVOXY_CONFIGURE_FILE} 中: {e}")
 
 
-def compile_and_install_privoxy(privoxy_source_dir,privoxy_install_dir,zlib_install_dir):
+# def compile_and_install_privoxy(privoxy_source_dir,privoxy_install_dir,zlib_install_dir):
+#     logger.info("正在编译安装privoxy")
+#     os.chdir(privoxy_source_dir)
+#     # 运行 autoheader 和 autoconf
+#     try:
+#         subprocess.run(['autoheader'], check=True)
+#         subprocess.run(['autoconf'], check=True)
+#     except subprocess.CalledProcessError as e:
+#         logger.error(f"运行 autoheader 或 autoconf 失败: {e}")
+#         return
+
+#     # 设置 CPPFLAGS 和 LDFLAGS 环境变量
+#     env = os.environ.copy()
+#     env['CPPFLAGS'] = f'{env.get("CPPFLAGS", "")} -I{zlib_install_dir}/include'
+#     env['LDFLAGS'] = f'{env.get("LDFLAGS", "")} -L{zlib_install_dir}/lib'
+
+#     # 运行 ./configure, make 和 make install
+#     try:
+#         # 配置 Privoxy
+#         subprocess.run(
+#             ['./configure', f'--prefix={privoxy_install_dir}'],
+#             check=True,
+#             env=env
+#         )
+
+#         # 编译
+#         subprocess.run(['make'], check=True)
+
+#         # 安装
+#         subprocess.run(['make', 'install'], check=True)
+
+#         logger.info("Privoxy 编译安装成功")
+#     except subprocess.CalledProcessError as e:
+#         logger.error(f"编译或安装 Privoxy 失败: {e}")
+
+
+def compile_and_install_privoxy(privoxy_source_dir, privoxy_install_dir, zlib_install_dir):
     logger.info("正在编译安装privoxy")
     os.chdir(privoxy_source_dir)
-    # 运行 autoheader 和 autoconf
-    try:
-        subprocess.run(['autoheader'], check=True)
-        subprocess.run(['autoconf'], check=True)
-    except subprocess.CalledProcessError as e:
-        logger.error(f"运行 autoheader 或 autoconf 失败: {e}")
+
+    def run_command(command, env=None):
+        try:
+            result = subprocess.run(command, check=True, capture_output=True, text=True, env=env)
+            print(colored(result.stdout, 'green'))
+        except subprocess.CalledProcessError as e:
+            print(colored(e.stderr, 'red'))
+            logger.error(f"运行 {command} 失败: {e}")
+            return False
+        return True
+
+    # Run autoheader and autoconf
+    if not run_command(['autoheader']):
+        return
+    if not run_command(['autoconf']):
         return
 
-    # 设置 CPPFLAGS 和 LDFLAGS 环境变量
+    # Set CPPFLAGS and LDFLAGS environment variables
     env = os.environ.copy()
     env['CPPFLAGS'] = f'{env.get("CPPFLAGS", "")} -I{zlib_install_dir}/include'
     env['LDFLAGS'] = f'{env.get("LDFLAGS", "")} -L{zlib_install_dir}/lib'
 
-    # 运行 ./configure, make 和 make install
-    try:
-        # 配置 Privoxy
-        subprocess.run(
-            ['./configure', f'--prefix={privoxy_install_dir}'],
-            check=True,
-            env=env
-        )
+    # Run ./configure, make, and make install
+    if not run_command(['./configure', f'--prefix={privoxy_install_dir}'], env=env):
+        return
+    if not run_command(['make']):
+        return
+    if not run_command(['make', 'install']):
+        return
 
-        # 编译
-        subprocess.run(['make'], check=True)
+    logger.info("Privoxy 编译安装成功")
 
-        # 安装
-        subprocess.run(['make', 'install'], check=True)
-
-        logger.info("Privoxy 编译安装成功")
-    except subprocess.CalledProcessError as e:
-        logger.error(f"编译或安装 Privoxy 失败: {e}")
 
 
 def make_privoxy():
