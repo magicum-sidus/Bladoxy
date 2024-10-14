@@ -1,4 +1,4 @@
-# Bladoxy (原SSprivoxy) V1.4.0 使用说明
+# ⚔️Bladoxy (原SSprivoxy) V1.4.0 使用说明
 
 Author *：M.S.*
 
