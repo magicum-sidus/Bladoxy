@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-BLADOXY_VERSION = "v1.4.3"
+BLADOXY_VERSION = "v1.4.4"
 
 
 def echo_version_info():

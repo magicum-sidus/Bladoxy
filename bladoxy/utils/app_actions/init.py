@@ -133,15 +133,16 @@ def initialize():
 
     ss_port = ssconfig_handler()
 
+    # select node
+    change_node()
+
+
     # 在这里插入编译安装privoxy的逻辑
     make_privoxy()
-
 
     # configure privoxy
     privoxy_port = configure_port(ss_port=ss_port, privoxy_port=8118, is_init=True,onlyss=False)
 
-    # select node
-    change_node()
 
     # start shadowsocks service
     start_sslocal()

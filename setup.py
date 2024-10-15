@@ -12,7 +12,7 @@ def parse_requirements(filename):
 
 setup(
     name="bladoxy",
-    version="1.4.3",
+    version="1.4.4",
     license='http://www.apache.org/licenses/LICENSE-2.0',
     description="Bladoxy is a linux network assistant.",
     author='Magicum Sidus',
