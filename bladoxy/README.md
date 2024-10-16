@@ -4,7 +4,9 @@ Author *：M.S.*
 
 *LICENSE：Apache 2.0*
 
-*Tips：请务必在每次执行命令后执行 source ～/.bashrc*
+*Tips1：请务必在每次执行 init、run、uptProf、uptNode 命令后执行 ```source ～/.bashrc```*
+
+*Tips2：请务必在每次执行 stop、cleanup 命令后执行 ```unset http_proxy``` 和 ```unset https_proxy``` 或者 重新打开一个终端*
 
 
 
@@ -155,7 +157,7 @@ Bladoxy 使用了以下开源项目：
 >
 > 2. Q：为什么pip安装不了包，显示连接超时错误？
 >
->    A：遇到类似问题我们建议重启一个终端，问题都会解决。（这个问题的原因我们会深入研究）
+>    A：如果停止 bladoxy 进程后，你忘记执行 ```unset http_proxy``` 和 ```unset https_proxy```，就会出现上述错误。重新打开一个终端也可以避免上述错误，此时无需执行  ```unset http_proxy``` 和 ```unset https_proxy```命令，系统不会加载这两个环境变量。
 >
 > 3. Q：为什么我访问本机或者局域网的 ip 会报 proxy 错误？
 > 
