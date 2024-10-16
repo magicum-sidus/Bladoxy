@@ -4,9 +4,11 @@ Author *：M.S.*
 
 *LICENSE：Apache 2.0*
 
-*Tips1：请务必在每次执行 init、run、uptProf、uptNode 命令后执行 ```source ～/.bashrc```*
+> Tips
 
-*Tips2：请务必在每次执行 stop、cleanup 命令后执行 ```unset http_proxy``` 和 ```unset https_proxy``` 或者 重新打开一个终端*
+*Tip1：请务必在每次执行 init、run、uptProf、uptNode 命令后执行 ```source ～/.bashrc```*
+
+*Tip2：请务必在每次执行 stop、cleanup 命令后执行 ```unset http_proxy``` 和 ```unset https_proxy``` 或者 重新打开一个终端*
 
 
 
@@ -106,9 +108,15 @@ bladoxy uptNode
 
 > ## **重要！！！**
 
-请在初始化、启动、更换节点、停止进程、清理以后确保执行 ```source ~/.bashrc``` 
+1）请在初始化、启动、更换节点以后确保执行 ```source ~/.bashrc``` 
 
-也就是说，每次执行命令请确保正确加载 ```~/.bashrc``` 文件。
+也就是说，执行上述命令后请确保正确加载 ```~/.bashrc``` 文件。
+
+2）请在停止进程、清理卸载之后执行 ```unset http_proxy``` 和 ```unset https_proxy```   或者 重新打开一个终端
+
+也就是说，执行上述命令后请确保清理 proxy 环境变量
+
+
 
 ### 四、测试
 
